@@ -1,9 +1,36 @@
-var express = require('express');
-var router = express.Router();
+var db = require("../database.js");
 
-/* GET home page. */
-router.get('/liveblog', function(req, res) {
-  res.render( 'liveblog', { title: 'Liveblogs' } );
-});
+exports.index = function(req, res) {
+  res.render('index', {
+    title: 'Luna'
+  });
+};
 
-module.exports = router;
+// Let's start the liveblogs.
+exports.liveblogs = {};
+/*
+ * GET all liveblogs
+ */
+exports.liveblogs.all = function(req, res) {
+  db.liveblog.find().skip(0).limit(20);
+};
+
+/*
+ * GET one liveblog
+ */
+exports.liveblogs.one = function(req, res) {
+  db.liveblogs.findOne({ "_id" : db.ObjectId(req.params.id) }, function(err, liveblog) {
+    console.log(liveblog);
+    if(err) return;
+    res.json(liveblog);
+  });
+};
+
+/*
+ * POST a new liveblog
+ */
+exports.liveblogs.create = function(req, res) {
+  db.liveblogs.save(req.body, function(err, doc){
+    res.json(doc);
+  });
+};
