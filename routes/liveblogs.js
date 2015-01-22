@@ -25,7 +25,6 @@ exports.liveblogs.all = function(req, res) {
  */
 exports.liveblogs.one = function(req, res) {
   db.liveblogs.findOne({ "_id" : db.ObjectId(req.params.id) }, function(err, liveblog) {
-    if(err) return;
     res.json(liveblog);
   });
 };
