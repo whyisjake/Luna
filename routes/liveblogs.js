@@ -2,6 +2,11 @@ var URL = require('url-parse');
 var db = require("../database.js");
 var request = require('request');
 
+// Throw DB errors.
+db.on('error',function(err) {
+    console.log('database error', err);
+});
+
 exports.index = function(req, res) {
   db.liveblogs.find().toArray(function(err, liveblogs) {
     res.render('index', {
@@ -27,7 +32,7 @@ exports.liveblogs = {};
  * GET all liveblogs
  */
 exports.liveblogs.all = function(req, res) {
-   db.liveblogs.find( function(err, liveblog) {
+  db.liveblogs.find( function(err, liveblog) {
     res.json(liveblog);
   });
 };
@@ -46,30 +51,38 @@ exports.liveblogs.one = function(req, res) {
  */
 exports.liveblogs.create = function(req, res) {
 
-  // Alright, so, let's figure out the path from the full URL.
-  var post_url = req.body.url,
-      url = new URL(post_url, true),
-      api_url = 'http://api.tumblr.com/v2/blog/' + url.hostname + '/posts/?api_key=fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4&notes_info=true';
+  // Find the API key on the site collection
+  db.site.findOne({ apiKey: { $exists: true } }, function(err, doc) {
 
-  request( api_url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+      var key = doc.apiKey;
 
-      // Let's parse the JSON response.
-      var parsed = JSON.parse(body);
+      // Alright, so, let's figure out the path from the full URL.
+      var post_url = req.body.url,
+          url = new URL(post_url, true),
+          api_url = 'http://api.tumblr.com/v2/blog/' + url.hostname + '/posts/?api_key=' + key + '&notes_info=true';
 
-      // Append the blog info onto the posted info.
-      req.body.blog = parsed.response.blog;
+      request( api_url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
 
-      // Create a new var to save the to db for conv sake.
-      var saved = req.body;
+          // Let's parse the JSON response.
+          var parsed = JSON.parse(body);
 
-      // And now, save to the database.
-      db.liveblogs.save(saved, function(err, doc){
+          // Append the blog info onto the posted info.
+          req.body.blog = parsed.response.blog;
 
-        // Send back the saved doc to the front-end.
-        res.json(doc);
+          // Create a new var to save the to db for conv sake.
+          var saved = req.body;
 
+          // And now, save to the database.
+          db.liveblogs.save(saved, function(err, doc){
+
+            // Send back the saved doc to the front-end.
+            res.json(doc);
+
+          });
+        }
       });
-    }
+
   });
+
 };
