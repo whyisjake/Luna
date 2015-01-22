@@ -11,6 +11,16 @@ exports.index = function(req, res) {
   });
 };
 
+exports.admin = function(req, res) {
+  db.site.findOne(function(err, site) {
+    res.render('admin', {
+      site: site,
+      title: 'Luna'
+    });
+  });
+};
+
+
 // Let's start the liveblogs.
 exports.liveblogs = {};
 /*

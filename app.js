@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Videos Route
 app.get( '/',                routes.index);
+app.get( '/admin',           routes.admin);
 app.get( '/liveblogs',       routes.liveblogs.all);
 app.get( '/liveblogs/:id',   routes.liveblogs.one);
 app.post('/liveblogs',       routes.liveblogs.create);
