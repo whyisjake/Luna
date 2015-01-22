@@ -1,8 +1,11 @@
 var db = require("../database.js");
 
 exports.index = function(req, res) {
-  res.render('index', {
-    title: 'Luna'
+  db.liveblogs.find().toArray(function(err, liveblogs) {
+    res.render('index', {
+      liveblogs: liveblogs,
+      title: 'Luna'
+    });
   });
 };
 
@@ -12,7 +15,9 @@ exports.liveblogs = {};
  * GET all liveblogs
  */
 exports.liveblogs.all = function(req, res) {
-  db.liveblogs.find().skip(0).limit(20);
+   db.liveblogs.find( function(err, liveblog) {
+    res.json(liveblog);
+  });
 };
 
 /*
@@ -20,7 +25,6 @@ exports.liveblogs.all = function(req, res) {
  */
 exports.liveblogs.one = function(req, res) {
   db.liveblogs.findOne({ "_id" : db.ObjectId(req.params.id) }, function(err, liveblog) {
-    console.log(liveblog);
     if(err) return;
     res.json(liveblog);
   });
