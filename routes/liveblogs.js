@@ -1,4 +1,6 @@
+var URL = require('url-parse');
 var db = require("../database.js");
+var request = require('request');
 
 exports.index = function(req, res) {
   db.liveblogs.find().toArray(function(err, liveblogs) {
