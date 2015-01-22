@@ -52,7 +52,7 @@ exports.liveblogs.one = function(req, res) {
 exports.liveblogs.create = function(req, res) {
 
   // Find the API key on the site collection
-  db.site.findOne({ apiKey: { $exists: true } }, function(err, doc) {
+  db.site.findOne(function(err, doc) {
 
       var key = doc.apiKey;
 
