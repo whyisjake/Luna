@@ -7,18 +7,11 @@ nav.navbar.navbar-inverse.navbar-fixed-top
         span(class="icon-bar")
         span(class="icon-bar")
 
-      a(class="navbar-brand" href="#") Luna
+      a(class="navbar-brand" href="#")= site.name
 
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav.navbar-right
         li
-          a(href="#") Dashboard
+          a(href="/") Dashboard
         li
-          a(href="#") Settings
-        li
-          a(href="#") Profile
-        li
-          a(href="#") Help
-
-      form(class="navbar-form navbar-right")
-        input(type="text" class="form-control" placeholder="Search...")
+          a(href="/admin") Settings

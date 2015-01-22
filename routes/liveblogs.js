@@ -8,10 +8,12 @@ db.on('error',function(err) {
 });
 
 exports.index = function(req, res) {
-  db.liveblogs.find().toArray(function(err, liveblogs) {
-    res.render('index', {
-      liveblogs: liveblogs,
-      title: 'Luna'
+  db.site.findOne(function(err, site) {
+    db.liveblogs.find().toArray(function(err, liveblogs) {
+      res.render('index', {
+        liveblogs: liveblogs,
+        site: site
+      });
     });
   });
 };
