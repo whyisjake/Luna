@@ -12,7 +12,7 @@ exports.liveblogs = {};
  * GET all liveblogs
  */
 exports.liveblogs.all = function(req, res) {
-  db.liveblog.find().skip(0).limit(20);
+  db.liveblogs.find().skip(0).limit(20);
 };
 
 /*
