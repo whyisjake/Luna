@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var io = require('socket.io');
 var routes = require('./routes/liveblogs');
 var app = express();
+var slurp = require('./slurp/slurp');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
