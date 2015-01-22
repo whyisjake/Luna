@@ -1,0 +1,21 @@
+h3.sub-header Add New Live Blog
+
+form(class="form-horizontal" id="add-liveblog")
+  .form-group
+    label(for="inputEmail3" class="col-sm-2 control-label") Name
+    .col-sm-10
+      input(type="text" class="form-control" id="name" placeholder="Name")
+
+  .form-group
+    label(for="url" class="col-sm-2 control-label") URL
+    .col-sm-10
+      input(type="url" class="form-control" id="url" placeholder="URL")
+
+  .form-group
+    label(for="break-by-date" class="col-sm-2 control-label") Break by date?
+    .col-sm-10
+      input(type="checkbox" id="break-by-date" name="break-by-date")
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      button(type="submit" class="btn btn-default submit") Sign in

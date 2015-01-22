@@ -1,0 +1,19 @@
+h3.sub-header Live Blogs
+
+.table-responsive
+  table.table.table-striped#liveblog
+    thead
+      tr
+        th ID
+        th Name
+        th URL
+        th Break
+    tbody
+
+      for liveblog in liveblogs
+        - console.log(liveblog)
+        tr
+          td= liveblog._id
+          td= liveblog.name
+          td= liveblog.url
+          td= liveblog.break
