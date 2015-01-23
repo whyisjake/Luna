@@ -29,6 +29,10 @@ app.get( '/liveblogs',       routes.liveblogs.all);
 app.get( '/liveblogs/:id',   routes.liveblogs.one);
 app.post('/liveblogs',       routes.liveblogs.create);
 
+app.get( '/post',            routes.post.all);
+app.get( '/post/site/:site', routes.post.site);
+app.get( '/post/skip/:num',  routes.post.offset);
+app.get( '/post/:id',        routes.post.one);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
