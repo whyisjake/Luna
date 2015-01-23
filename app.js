@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var io = require('socket.io');
 var routes = require('./routes/liveblogs');
 var app = express();
+var slurp = require('./slurp/slurp');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +29,10 @@ app.get( '/liveblogs',       routes.liveblogs.all);
 app.get( '/liveblogs/:id',   routes.liveblogs.one);
 app.post('/liveblogs',       routes.liveblogs.create);
 
+app.get( '/post',            routes.post.all);
+app.get( '/post/site/:site', routes.post.site);
+app.get( '/post/skip/:num',  routes.post.offset);
+app.get( '/post/:id',        routes.post.one);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

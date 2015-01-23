@@ -88,3 +88,39 @@ exports.liveblogs.create = function(req, res) {
   });
 
 };
+
+// Let's start the post.
+exports.post = {};
+/*
+ * GET all post
+ */
+exports.post.all = function(req, res) {
+  db.post.find().limit(20).sort( { id: -1 } ).toArray(function(err, post) {
+    res.json(post);
+  });
+};
+
+exports.post.site = function(req, res) {
+  console.log( req.params.site );
+  db.post.find({ blog_name: req.params.site }).limit(200).sort( { id: -1 } ).toArray(function(err, post) {
+    res.json(post);
+  });
+};
+
+/*
+ * GET 20 posts, offset by some.
+ */
+exports.post.offset = function(req, res) {
+  db.post.find().limit(20).skip( req.params.num, function(err, post) {
+    res.json(post);
+  });
+};
+
+/*
+ * GET one post
+ */
+exports.post.one = function(req, res) {
+  db.post.findOne({ "_id" : db.ObjectId(req.params.id) }, function(err, post) {
+    res.json(post);
+  });
+};
