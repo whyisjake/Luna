@@ -10,7 +10,7 @@ db.site.findOne(function(err, doc) {
   var key = doc.apiKey;
 
   // Alright, so, let's figure out the path from the full URL.
-  var post_url = 'http://w1r3dc352015.tumblr.com',
+  var post_url = 'http://topgear.tumblr.com/',
       url = new URL(post_url, true),
       api_url = 'http://api.tumblr.com/v2/blog/' + url.hostname + '/posts/?api_key=' + key + '&notes_info=true';
 
